@@ -1,0 +1,70 @@
+<div class="container w-11/12 max-w-7xl mb-4 dark:text-white"
+    *ngIf="orderRes"
+>
+    <div class="text-center py-4 ">
+        <h1 class="text-4xl font-bold mb-2">Xác nhận đơn hàng</h1>
+        <p>Cảm ơn bạn đã đặt hàng. Dưới đây là thông tin chi tiết về đơn hàng</p>
+    </div>
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-12 py-3">
+                        <span class="sr-only">Image</span>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Sản phẩm
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Số lượng
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Giá
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let orderDetailRes of orderDetailsRes">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="p-4">
+                            <img [src]="'http://localhost:8088/images/' + orderDetailRes.product.thumbnail" class="w-16 md:w-32 xl:w-48 max-w-full max-h-full" alt="Apple Watch">
+                        </td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                            {{orderDetailRes.product.name}}
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                
+                                <div>
+                                    {{orderDetailRes.number_of_products}}
+                                </div>
+                                
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                            {{orderDetailRes.price  | currency: 'USD': 'symbol': '1.2-2'}}
+                        </td>
+                        
+                    </tr>
+                </ng-container>
+                
+            </tbody>
+        </table>
+    </div>
+
+    
+
+    <h3 class="text-right text-xl font-bold mt-2">Tổng cộng: {{orderRes.total_money | currency: 'USD': 'symbol': '1.2-2'}} </h3>
+    
+
+    <div class="text-center">
+
+        <button type="button" class="font-semibold  mt-2 bg-gradient-to-r from-pink-500 to-orange-500 py-2 px-4 rounded-3xl w-1/5 dark:from-pink-500 dark:to-purple-500"
+            routerLink="/home"
+        >Tiếp tục mua sắm</button>
+    </div>
+
+
+</div>

@@ -1,0 +1,71 @@
+<div class="container w-3/4 text-center mb-4">
+    <div class="w-full mx-auto text-black dark:text-white">
+        <h1 class="text-4xl font-medium py-2">Đây là trang Home</h1>
+        <p>Trang này hiển thị danh sách các sản phẩm, kèm ảnh</p>
+        <p class="pt-2 pb-8">Các bạn có thể chọn xem sản phẩm và mua hàng tại đây </p>
+    </div>
+    <div>
+        <input class="w-full mb-1 text-sm border py-2 px-2 rounded-md mr-1 outline-current focus:outline text-slate-400 border-slate-400  dark:bg-slate-800
+            lg:w-72 sm:w-44" 
+            type="text" placeholder="Tìm kiếm sản phẩm"
+            [(ngModel)]="search"
+        >
+
+        <select class="w-full mb-1 text-sm border py-2 px-2 rounded-md  text-slate-500 dark:bg-slate-800 
+            lg:w-52 sm:w-44 dark:text-slate-200" 
+            name="selection" id="slt"
+            [(ngModel)]="selectedCategoryId"
+        >
+            <option class="bg-[#c8c8c8] text-white" selected disabled value="0">Danh mục sản phẩm</option>
+            <option selected value="0">Tất cả</option>
+            <option *ngFor="let category of categories$ | async" [value]="category.id">{{category.name}}</option>
+        </select>
+
+        <button type="button" class="text-white bg-blue-700 ml-1 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            (click)="onSearch()"
+        >Tìm</button>
+
+    </div>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 my-6">
+    <ng-container *ngFor="let item of products$ | async; trackBy: trackByProduct" >
+            <app-card [productItem]="item"></app-card>
+            
+    </ng-container>
+    </div>    
+
+    <nav aria-label="Page navigation example">
+        <ul class="inline-flex -space-x-px text-base h-10 cursor-pointer select-none">
+            <li>
+                <a  class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    (click)="previousPage()"
+                >Previous</a>
+            </li>
+            <ng-container *ngFor="let number of arrPage">
+                
+                <li>
+                    <a  class="flex items-center justify-center px-4 h-10 leading-tight  bg-blue-50    border border-gray-300 hover:text-blue-700 hover:bg-blue-100  dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        (click)="onPageChange($event)"
+                        [ngClass]="page === number ? 'text-blue-600 bg-blue-50' : 'text-gray-500 bg-white'"
+                    >
+                        {{number}}
+                    </a>
+                </li>
+            </ng-container>
+
+            <!-- <li>
+                <a  class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+            </li> -->
+            
+            
+            <li>
+                <a  class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    (click)="nextPage()"
+                >Next</a>
+            </li>
+        </ul>
+    </nav>
+    
+</div>
+

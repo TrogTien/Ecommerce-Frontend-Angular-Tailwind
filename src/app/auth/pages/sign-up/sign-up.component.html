@@ -1,0 +1,88 @@
+
+<div class="max-w-md shadow-lg container mt-4 bg-white p-4 rounded-lg dark:bg-slate-600 dark:shadow-slate-500">
+    <h2 class="text-3xl text-center font-semibold dark:text-white">Đăng ký</h2>
+    <form class=" " [formGroup]="signUpForm" (ngSubmit)="onSubmit()" >
+        <div class="mb-2">
+            <label for="phoneNumber" class=" text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+            <input type="tel" id="phoneNumber" class="border-t-0 border-x-0 border-b-2outline-none text-gray-900 text-sm  focus:ring-0 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent  dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-blue-500" placeholder="name@flowbite.com" required 
+                (input)="phoneNumber.markAsUntouched()" formControlName="phoneNumber"
+            />
+            <p *ngIf="phoneNumber.invalid && phoneNumber.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(phoneNumber) }}</p>
+
+        </div>
+
+
+        <div class="mb-2">
+            <label for="username" class=" text-sm font-medium text-gray-900 dark:text-white">Username</label>
+            <input  type="text" id="username" class="border-t-0 border-x-0 border-b-2 outline-none text-gray-900 text-sm  focus:ring-0 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent  dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-blue-500"  required 
+                (input)="username.markAsUntouched()" formControlName="username"
+            />
+            <p *ngIf="username.invalid && username.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(username) }}</p>
+
+        </div>
+
+        <div class="mb-2">
+            <label for="username" class=" text-sm font-medium text-gray-900 dark:text-white">Birthday</label>
+            <div class="relative max-w-sm mt-2">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                </svg>
+                </div>
+                <input datepicker  id="default-datepicker"  type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date" 
+                    (input)="birthday.markAsUntouched()" formControlName="birthday"   #myDatePicker 
+                    
+
+                >
+                
+            </div>
+            <p id="helper-text-explanation" class="mt-2 ml-10 text-xs text-gray-500 dark:text-gray-400">MM/DD/YYYY</p>
+            <p *ngIf="birthday.hasError('ageInvalid') && birthday.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">Yêu cầu trên 18 tuổi</p>
+
+
+        </div>
+        
+        <div class="mb-2">
+            <label for="address" class=" text-sm font-medium text-gray-900 dark:text-white">Address</label>
+            <input  type="text" id="address" class="border-t-0 border-x-0 border-b-2 outline-none text-gray-900 text-sm  focus:ring-0 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent  dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-blue-500"  required 
+                (input)="address.markAsUntouched()" formControlName="address"
+            />
+            <p *ngIf="address.invalid && address.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(address) }}</p>
+
+        </div>
+
+        <div class="mb-2">
+            <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white">Password</label>
+            <input formControlName="password" type="password" id="password" class="border-t-0 border-x-0 border-b-2 outline-none text-gray-900 text-sm focus:ring-0 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-blue-500" placeholder="********" required 
+                (input)="password.markAsUntouched()" formControlName="password"
+            />
+            <p *ngIf="password.invalid && password.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(password) }}</p>
+
+        </div>
+
+        <div class="mb-2">
+            <label for="repassword" class="block text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
+            <input  type="password" id="repassword" class="border-t-0 border-x-0 border-b-2 outline-none text-gray-900 text-sm focus:ring-0 focus:border-blue-500 block w-full p-2.5 dark:bg-transparent dark:placeholder-gray-400 dark:text-white dark:focus:ring-0 dark:focus:border-blue-500" placeholder="********" required 
+                (input)="confirmPassword.markAsUntouched()" formControlName="confirmPassword"
+            />
+            <p *ngIf="confirmPassword.invalid && confirmPassword.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(confirmPassword) }}</p>
+            <p *ngIf="signUpForm.hasError('passwordNotMatch') && confirmPassword.touched && confirmPassword.valid && password.valid"  class="mt-2 text-sm text-red-600 dark:text-red-500">Mật khẩu không khớp nhau</p>
+            
+        </div>        
+                
+
+
+        <button type="submit" class="text-white bg-gradient-to-r from-teal-400 to-blue-700 hover:opacity-80 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm w-full  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:from-pink-500 dark:to-purple-500">Sign up</button>
+        
+        <div class="border-b m-4 border-black"></div>
+        <div class="text-center ">
+            <p>{{birthday.errors| json}}</p>
+
+            <p class="dark:text-white">Bạn đã có tài khoản
+
+                <a [routerLink]="'/auth/login'" class=" text-sm text-blue-400  hover:underline">Login</a>
+            </p>
+        </div>
+    </form>
+</div>
+  

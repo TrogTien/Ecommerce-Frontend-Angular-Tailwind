@@ -1,0 +1,192 @@
+<div class="py-4 lg:container dark:text-white">
+
+    <ng-container *ngIf="carts.length !== 0; else noCart">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+            <div class="mt-4 mx-2">
+                <div class="text-center">
+    
+                    <h2 class="text-3xl text-pink-400 font-bold mb-4 inline-block">Thông tin người nhận</h2>  
+                </div>
+                <form [formGroup]="orderForm" class="max-w-sm mx-auto" (ngSubmit)="onSubmitForm()" >
+                    <div class="mb-3">
+                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your username</label>
+                        <input  type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Nguyễn Văn A"  required
+                            formControlName="full_name"  (input)="username.markAsUntouched()"
+                        />
+                        <p *ngIf="username.invalid && username.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(username) }}</p>
+
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required 
+                            formControlName="email" (input)="email.markAsUntouched()"
+                        />
+                        <p *ngIf="email.invalid && email.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(email) }}</p>
+
+                    </div>
+        
+                    <div class="mb-3">
+                        <label for="phonenumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your phone number</label>
+                        <input type="text" id="phonenumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Nguyễn Văn A"  required 
+                            formControlName="phone_number" (input)="phoneNumber.markAsUntouched()"
+                        />
+                        <p *ngIf="phoneNumber.invalid && phoneNumber.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(phoneNumber) }}</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+                        <textarea type="text" id="address" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Hà Nội"  required
+                            formControlName="address"
+                        ></textarea>
+                        <p *ngIf="address.invalid && address.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(address) }}</p>
+
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="note" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Note</label>
+                        <input type="text" id="note" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Note"  required 
+                            formControlName="note"
+                        />
+                        
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="note" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Shipping Method</label>
+
+                        <select class="w-full text-sm border py-2 px-2 rounded-md  text-slate-500 dark:bg-slate-800 
+                             dark:text-slate-200"  
+                             formControlName="shipping_method" 
+                        >
+                            <option class="bg-[#c8c8c8] text-white" selected disabled value="">Shipping method</option>
+                            <option  value="fast">Fast (15$)</option>
+                            <option  value="normal">Normal (10$)</option>
+                        </select>
+                        <p *ngIf="shippingMethod.invalid && shippingMethod.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(shippingMethod) }}</p>
+                        
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="note" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Payment Method</label>
+
+
+                        <select class="w-full text-sm border py-2 px-2 rounded-md  text-slate-500 dark:bg-slate-800 
+                             dark:text-slate-200"  
+                             formControlName="payment_method"
+                        >
+                            <option class="bg-[#c8c8c8] text-white" selected disabled value="">Payment method</option>
+                            <option  value="cod">COD</option>
+                            <option  value="transfer">Transfer</option>
+                        </select>
+                        <p *ngIf="paymentMethod.invalid && paymentMethod.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(paymentMethod) }}</p>
+
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="mt-4 mx-4">
+                
+                <!-- Table -->
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-12 py-3">
+                                    <span class="sr-only">Image</span>
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Product
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Qty
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Price
+                                </th>
+                                
+                            </tr>
+                        </thead>
+    
+                        <tbody>
+    
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" 
+                                *ngFor="let cart of carts"
+                            >
+                                <td class="p-4">
+                                    <img [src]="'http://localhost:8088/images/' + cart.thumbnail" class="w-16 md:w-32 xl:w-32 max-w-full max-h-full" alt="Apple Watch">
+                                </td>
+                                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {{cart.name}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <button class="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button"
+                                            (click)="decreaseQty(cart)"
+                                        >
+                                            <span class="sr-only">Quantity button</span>
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                                            </svg>
+                                        </button>
+                                        <div>
+                                            <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required min="1"
+                                                [(ngModel)]="cart.qty"
+                                                (change)="onChange()"
+                                            />
+                                        </div>
+                                        <button class="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button"
+                                            (click)="increaseQty(cart)"
+                                        >
+                                            <span class="sr-only">Quantity button</span>
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                    {{cart.price * cart.qty | currency: 'USD': 'symbol': '1.2-2'}}
+                                </td>
+                                
+                            </tr>
+    
+                            
+                            
+                        </tbody>
+                    </table>
+                </div>
+    
+                <h4 class="text-xl text-end mt-2 font-semibold ">Tổng giá trị: {{total  | currency: 'USD' : 'symbol' : '1.2-2'}} </h4>
+    
+                <div class="">
+                    <h4 class="text-xl mb-2"> Nhập coupon</h4>
+                    
+                    
+                    <input type="tel" class="py-1 px-4 rounded-l-lg w-4/5 border-none">
+                    <button type="button" class="bg-gradient-to-r from-teal-400 to-blue-500 py-1 px-4 rounded-r-3xl w-1/5 dark:from-pink-500 dark:to-purple-500">Áp dụng</button>
+                </div>
+    
+                <button type="button" class="font-semibold mt-2 bg-gradient-to-r from-pink-500 to-orange-500 py-2 px-4 rounded-3xl w-1/5 "
+                    (click)="onSubmitForm()"
+                >Đặt hàng</button>
+                
+      
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-template #noCart>
+        <div class="text-center py-32">
+                             
+              
+            <svg class="mx-auto size-32 h21yx v1opy huxlp we17s p9tun dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                <path d="M3 6h18"></path>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <h1 class="text-4xl font-bold mt-4">Your cart is empty</h1>
+        </div>
+    </ng-template>
+
+</div>

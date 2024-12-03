@@ -1,0 +1,51 @@
+<div class="mb-4 mx-2">
+    <div class="relative">
+
+        <div class="select-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                class="size-12 absolute drop-shadow-custom top-1/2 -translate-y-1/2 text-white cursor-pointer left-4 opacity-50 hover:opacity-100"
+                [ngClass]="{'hidden': currentIndex === 0}"
+                (click)="goToPrevious()"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>          
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                class="size-12 absolute drop-shadow-custom  top-1/2 -translate-y-1/2 text-white cursor-pointer right-4 opacity-50 hover:opacity-100"
+                [ngClass]="{'hidden': currentIndex === slides.length - 1}"
+                (click)="goToNext()"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>          
+        </div>
+    
+        <div #myDiv class="flex h-[400px] w-full overflow-hidden scroll-smooth ">
+            <ng-container *ngFor="let slide of slides; let i = index">
+                <div class="w-full h-full flex-shrink-0 bg-cover bg-no-repeat bg-center" 
+                    [ngStyle]="{'background-image': 'url(' + slide + ')'}" 
+                ></div>
+            </ng-container>
+        </div>
+        <!-- Dot -->
+        <div class="flex absolute bottom-2 left-0 right-0 justify-center">
+            <div *ngFor="let slide of slides; let slideIndex = index" 
+                class="cursor-pointer mx-1 bg-white size-4 rounded-full transition duration-300	ease-in-out hover:opacity-70"
+                [ngClass]="{'opacity-50': slideIndex !== currentIndex}"
+                (click)="goToSlide(slideIndex)"
+            >
+            </div>
+        </div>
+
+    </div>
+    <!-- mini images -->
+    <div class="flex mt-4 justify-between">
+
+        <div class="cursor-pointer"
+            *ngFor="let slide of slides; let slideIndex = index"
+            [ngClass]="{'border-blue-500 border-2': slideIndex == currentIndex}"
+            (click)="goToSlide(slideIndex)"
+        >
+            <img class="size-28 object-cover" [src]="slide" alt="">
+        </div>
+
+    </div>
+</div>

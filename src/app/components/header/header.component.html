@@ -1,0 +1,175 @@
+
+
+<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 ">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+
+        <a routerLink="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo">
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ShopApp</span>
+        </a>
+
+    
+
+        <div class="flex md:order-2  space-x-3 md:space-x-2 rtl:space-x-reverse relative">
+
+            <ng-container *ngIf="isLoggedIn$ | async; else noLogin">
+                <div id="user">
+
+                    <button type="button" class="text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm pl-2 pr-3 py-1 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        
+                    >
+                        <svg class="size-8 me-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                      
+                        <span class=" text-base">Nguyen Test</span>
+    
+                    </button>
+                    <div id="menu-user" class="z-10 -left-2 top-12 absolute invisible opacity-0 cursor-pointer bg-slate-50 divide-y divide-gray-100 rounded-lg shadow border w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" >
+                          <li>
+                            <a  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                          </li>
+                          
+                          <li>
+                            <a (click)="onLogOut()" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </ng-container>
+
+            
+
+            <ng-template #noLogin>
+
+                <button type="button" class="text-white bg-blue-700 rounded-full hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium  text-sm px-3 py-1 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    routerLink="/auth"
+                >
+                      
+                    <span class=" text-base">Sign up</span>
+                </button>
+            </ng-template>
+
+
+            
+
+            <app-dark-mode></app-dark-mode>
+            
+
+            <!-- Cart -->
+            <button data-popover-target="popover-default" data-popover-placement="bottom-end"  type="button" class="relative inline-flex items-center p-2 text-sm font-medium text-center   rounded-lg   dark:text-white "
+                #buttonTrigger
+            >
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clip-rule="evenodd" />
+                </svg>
+
+                <span class="sr-only">Notifications</span>
+                <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -end-2 dark:border-gray-900">{{length}}</div>
+            </button>
+
+            <div data-popover id="popover-default" role="tooltip" class="absolute z-10 invisible opacity-0  inline-block w-96 text-sm text-gray-500 transition-opacity duration-300 bg-slate-50 border border-gray-200 rounded-lg shadow-xl  dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
+                #contentTarget
+            >
+
+                <ng-container *ngIf="carts$ | async as carts">
+                    <ng-container *ngIf="carts.length > 0; else noCart">
+
+                        <ul class="max-w-xl divide-y divide-gray-200 dark:divide-gray-700">
+        
+                            <li class="py-2 px-2 sm:py-2 hover:bg-slate-200 cursor-pointer" *ngFor="let item of carts$ | async">
+                                <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-16 h-16 rounded-sm object-cover" [src]="'http://localhost:8088/images/' + item.thumbnail" alt="Neil image">
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                        {{item.name}}
+                                        </p>
+                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                        email&#64;flowbite.com
+                                        </p>
+                                    </div>
+                                    <div class="  text-base font-semibold text-gray-900 dark:text-white">
+                                        <p>
+                                            {{item.price | currency: 'USD': 'symbol': '1.2-2'}} 
+                                            <span class="px-1 text-xs">x</span>
+                                            <span class="text-gray-400">{{item.qty}}</span>
+                                        </p>
+                                        <p class="text-sm cursor-pointer p-3 float-end hover:text-red-500"
+                                            (click)="onRemoveCartItem(item)"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                                <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
+                                            </svg>
+                                          
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                        </ul>
+                        
+                        <div routerLink="/order" class="text-white mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium max-w-40 text-center float-end cursor-pointer rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                            (click)="onHideCart()"
+                        >Thanh toán</div>
+        
+                    </ng-container>
+                </ng-container>
+                
+                <ng-template #noCart>
+                    <div class="text-center py-4">
+
+                        <svg class="mx-auto size-16 h21yx v1opy huxlp we17s p9tun dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <path d="M3 6h18"></path>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <h3 class="text-xl font-bold">Your cart is empty</h3>
+                    </div>
+
+                </ng-template>
+                
+                <div data-popper-arrow></div>
+            </div>
+
+            <!--  -->
+
+            
+              
+
+            <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false"
+                (click)="handleNavBar()"
+            >
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </button>   
+
+        </div>
+
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky"
+                [ngClass]="{ 'hidden': !isShowNavbar}"
+        >
+            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li>
+                <a [routerLink]="'/home'" routerLinkActive="text-white bg-blue-700 hover:bg-blue-600 hover:text-black md:text-blue-700 md:bg-transparent md:dark:text-blue-500" [routerLinkActiveOptions]="{ exact: true }" 
+                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent" aria-current="page">Home</a>
+                </li>
+                
+                <li>
+                <a [routerLink]="'/order'" routerLinkActive="text-white bg-blue-700 hover:bg-blue-600 hover:text-black md:text-blue-700 md:bg-transparent md:dark:text-blue-500" 
+                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700  md:dark:hover:bg-transparent ">Order</a>
+                </li>
+                
+                
+            </ul>
+        </div>
+        
+
+    </div>
+</nav>

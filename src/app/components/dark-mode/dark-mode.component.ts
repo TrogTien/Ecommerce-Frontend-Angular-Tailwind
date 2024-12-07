@@ -1,34 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DarkModeService } from 'src/app/services/dark-mode.service';
 
 @Component({
   selector: 'app-dark-mode',
   templateUrl: './dark-mode.component.html',
   styleUrls: ['./dark-mode.component.scss']
 })
-export class DarkModeComponent implements OnInit {
+export class DarkModeComponent implements OnInit, OnDestroy {
+  private darkModeSubscription!: Subscription;
   isDarkMode: boolean = false;
+
+  constructor(private darkModeService: DarkModeService) {}
+  
   
   ngOnInit(): void {
-    this.isDarkMode = localStorage.getItem("theme") === "dark";
-    this.updateTheme();
+    this.darkModeSubscription = this.darkModeService.darkMode$.subscribe(darkModeState => {
+      this.isDarkMode = darkModeState;
+    })
   }
 
   
 
   toggleTheme() {
-    this.isDarkMode = !this.isDarkMode;
-    this.updateTheme();
+    this.darkModeService.toggleTheme();
   }
 
-  updateTheme() {
-    const htmlElement = document.documentElement;
-
-    if (this.isDarkMode) {
-      htmlElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      htmlElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
+  ngOnDestroy(): void {
+    this.darkModeSubscription.unsubscribe();
   }
+  
 }

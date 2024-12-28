@@ -6,6 +6,9 @@ import { ProductManagementComponent } from './pages/product-management/product-m
 import { OrderManagementComponent } from './pages/order-management/order-management.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { CharComponent } from './pages/char/char.component';
+import { AddProductComponent } from './pages/product-management/add-product/add-product.component';
+import { EditProductComponent } from './pages/product-management/edit-product/edit-product.component';
+import { ProductDeletedComponent } from './pages/product-management/product-deleted/product-deleted.component';
 
 const routes: Routes = [
   {
@@ -18,6 +21,9 @@ const routes: Routes = [
       { path: 'orders', component: OrderManagementComponent },
       { path: 'calendar', component: CalendarComponent },
       { path: 'charts', component: CharComponent },
+      { path: 'add-product', component: AddProductComponent },
+      { path: 'product-deleted', component: ProductDeletedComponent },
+      { path: 'edit-product/:productId', component: EditProductComponent },
 
     ]
   }

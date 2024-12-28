@@ -6,5 +6,6 @@ export interface Product {
     price: number;
     thumbnail: string;
     description: string;
-    category: Category;
+    category: Category | null;
+    isActive: boolean;
 }

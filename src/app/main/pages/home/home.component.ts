@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Category } from 'src/app/models/interface/category.interface';
 import { ProductResponse } from 'src/app/models/interface/product-response.interface';
+import { Product } from 'src/app/models/interface/product.interface';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -11,7 +12,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  products$: Observable<ProductResponse[]> | undefined;
+  products$: Observable<Product[]> | undefined;
   categories$: Observable<Category[]> | undefined;
 
   selectedCategoryId: number = 0;
@@ -29,64 +30,32 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.products$ = this.productService.products$;
-    this.categories$ = this.categoryService.category$;
+    this.categories$ = this.categoryService.getAllCategories();
 
-    this.productService.initProducts(this.page - 1, this.limit).subscribe();   
-    this.categoryService.getAllCategories().subscribe();
+    this.loadProducts();
 
     // nhan total page 2 lan
     this.products$.pipe(
       take(2)
     ).subscribe(data => {
       this.totalPages = this.productService.totalPages;
-      // console.log(this.totalPages);
+      console.log(this.totalPages);
     })
     
   }
-  // (click) button = Tim
-  onSearch(): void {
-    this.productService.getAllProducts(this.page - 1, this.limit, this.search, this.selectedCategoryId).subscribe()
+
+  onPageChange(newPage: number): void {
+    this.page = newPage;
+    this.loadProducts()
   }
 
-  onPageChange(event: Event): void {
-    event.preventDefault();
-
-    const content = event.target as HTMLElement;
-
-    this.page = Number(content.textContent)
-
-    this.productService.getAllProducts(this.page - 1, this.limit, this.search, this.selectedCategoryId).subscribe()
+  loadProducts(): void {
+    this.productService.getAllActiveProducts(this.page - 1, this.limit, this.search, this.selectedCategoryId).subscribe()
   }
 
-  nextPage(): void {
-    if (this.arrPage[this.arrPage.length - 1] < this.totalPages) {
+  
 
-      
-      const startNewPage = this.arrPage[this.arrPage.length - 1] + 1;
-
-      this.arrPage = Array.from({ length: 5}, (_, i) => startNewPage + i);
-      this.page = startNewPage;
-      console.log(this.page);
-      this.productService.getAllProducts(this.page - 1, this.limit).subscribe()
-    }
-
-  }
-
-  previousPage(): void {
-    if (this.arrPage[0] > 1) {
-      
-
-      const startNewPage = this.arrPage[0] - 5;
-
-      this.arrPage = Array.from({ length: 5}, (_, i) => startNewPage + i);
-      this.page = startNewPage + 4;
-      
-      this.productService.getAllProducts(this.page - 1, this.limit).subscribe()
-    }
-
-  }
-
-  trackByProduct(index: number, product: ProductResponse): number {
+  trackByProduct(index: number, product: Product): number {
     return product.id;
   }
 

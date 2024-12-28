@@ -1,0 +1,38 @@
+<div
+    class="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+>
+    <div class="col-span-3 flex items-center">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div >
+                <img class="size-12.5 object-cover rounded-md" [src]="imageUrl" alt="Product" />
+
+            </div>
+            <p class="text-sm font-medium text-black dark:text-white">
+                {{productItem.name}}
+            </p>
+        </div>
+    </div>
+    <div class="col-span-1 hidden items-center sm:flex">
+        <p class="text-sm font-medium text-black dark:text-white">{{productItem.category?.name}}</p>
+    </div>
+    <div class="col-span-1 flex items-center">
+        <p class="text-sm font-medium text-black dark:text-white">{{productItem.price | currency: 'USD': 'symbol': '1.2-2'}}</p>
+    </div>
+    <div class="col-span-1 flex items-center">
+        <p class="text-sm font-medium text-black dark:text-white">72</p>
+    </div>
+    <div class="col-span-1 hidden sm:flex items-center">
+        <p class="text-sm font-medium text-meta-3">$103</p>
+    </div>
+    <div class="col-span-1 flex items-center space-x-3.5">
+        <!-- View -->
+        <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-slate-200 rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+            (click)="onRestoreProduct()"
+        >Restore</button>
+
+        
+    </div>
+</div>
+
+
+

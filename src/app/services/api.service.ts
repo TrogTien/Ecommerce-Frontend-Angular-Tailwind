@@ -20,6 +20,10 @@ export class ApiService {
     return this.http.post(`${this.ROOT_URL}/${endpoint}`, data);
   }
 
+  put(endpoint: string, data: any): Observable<any> {
+    return this.http.put(`${this.ROOT_URL}/${endpoint}`, data)
+  }
+
   patch(endpoint: string, data: any): Observable<any> {
     return this.http.patch(`${this.ROOT_URL}/${endpoint}`, data);
   }

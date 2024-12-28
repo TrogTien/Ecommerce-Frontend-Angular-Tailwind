@@ -3,6 +3,7 @@ import { Cart } from '../models/interface/cart.interface';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ApiService } from './api.service';
 import { ProductResponse } from '../models/interface/product-response.interface';
+import { Product } from '../models/interface/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +83,7 @@ export class CartService {
     return [];
   }
 
-  addCart(product: ProductResponse, quantity: number): void {
+  addCart(product: Product, quantity: number): void {
     const carts = this.getCart();
     const existingProduct = carts.find(cartItem => cartItem.productId === product.id);
 

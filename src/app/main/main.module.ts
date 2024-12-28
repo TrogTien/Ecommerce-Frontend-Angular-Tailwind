@@ -13,7 +13,9 @@ import { CardComponent } from '../components/card/card.component';
 import { RatingComponent } from '../components/rating/rating.component';
 import { DarkModeComponent } from '../components/dark-mode/dark-mode.component';
 import { ImageSliderComponent } from '../components/image-slider/image-slider.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -29,13 +31,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RatingComponent,
     DarkModeComponent,
     ImageSliderComponent,
-  
   ],
   imports: [
     CommonModule,
     MainRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class MainModule { }

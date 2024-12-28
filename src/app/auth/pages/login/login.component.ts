@@ -18,7 +18,7 @@ export class LoginComponent {
   ) {}
 
   loginForm = this.formBuilder.group({
-    phoneNumber: ['0924292133', [Validators.required, Validators.minLength(8)]],
+    phoneNumber: ['09734523', [Validators.required, Validators.minLength(8)]],
     password: ['123456789', [Validators.required, Validators.minLength(6)]]
   })
 

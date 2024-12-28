@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductResponse } from 'src/app/models/interface/product-response.interface';
+import { Product } from 'src/app/models/interface/product.interface';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
-  @Input() productItem: ProductResponse | undefined;
+  @Input() productItem: Product | undefined;
   
   imageUrl: string = "";
 

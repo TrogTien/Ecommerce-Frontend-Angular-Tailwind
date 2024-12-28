@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Datepicker, initDatepickers } from 'flowbite';
 
 import { passwordMatchValidator } from 'src/app/validators/password-match.validator';
@@ -57,6 +57,8 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }, { validators: passwordMatchValidator("password", "confirmPassword") });
 
   onSubmit(): void {
+    this.markAllControlsTouched(this.signUpForm);
+
     if (this.signUpForm.valid) {
       const [month, day, year] = this.birthday.value.split('/');
       const dateOfBirth = `${year}-${month}-${day}`;
@@ -90,6 +92,15 @@ export class SignUpComponent implements OnInit, AfterViewInit {
     
 
   }
+
+  markAllControlsTouched(formGroup: FormGroup): void {
+      Object.keys(formGroup.controls).forEach((key) => {
+        const control = formGroup.get(key);
+        if (control instanceof FormControl) {
+          control.markAsTouched();
+        } 
+      });
+    }
 
   getErrorMessage(formControl: AbstractControl): string {
     if (formControl.hasError('required')) return "Không được để trống";

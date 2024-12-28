@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { ProductResponse } from 'src/app/models/interface/product-response.interface';
+import { Product } from 'src/app/models/interface/product.interface';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -34,7 +35,16 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(): void {
-    this.cartService.addCart(this.product, this.quantity);
+    const _product: Product = {
+      id: this.product.id,
+      name: this.product.name,
+      price: this.product.price,
+      thumbnail: this.product.thumbnail,
+      description: this.product.description,
+      category: null, // Để category là null
+      isActive: true
+    }
+    this.cartService.addCart(_product, this.quantity);
   }
 
   increaseQty(): void {

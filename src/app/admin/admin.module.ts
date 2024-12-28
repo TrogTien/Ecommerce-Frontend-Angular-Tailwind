@@ -17,6 +17,13 @@ import { CharComponent } from './pages/char/char.component';
 import { ProductManagementComponent } from './pages/product-management/product-management.component';
 import { OrderManagementComponent } from './pages/order-management/order-management.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ProductItemComponent } from './pages/product-management/product-item/product-item.component';
+import { AddProductComponent } from './pages/product-management/add-product/add-product.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
+import { EditProductComponent } from './pages/product-management/edit-product/edit-product.component';
+import { ProductDeletedComponent } from './pages/product-management/product-deleted/product-deleted.component';
+import { ItemProductDeletedComponent } from './pages/product-management/product-deleted/item-product-deleted/item-product-deleted.component';
 
 
 @NgModule({
@@ -35,11 +42,18 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CharComponent,
     ProductManagementComponent,
     OrderManagementComponent,
+    ProductItemComponent,
+    AddProductComponent,
+    EditProductComponent,
+    ProductDeletedComponent,
+    ItemProductDeletedComponent,
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

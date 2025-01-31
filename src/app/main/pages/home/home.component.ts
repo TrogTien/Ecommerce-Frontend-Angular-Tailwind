@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
   page = 1;
   limit = 6;
   totalPages = 1;
-  arrPage = [1,2,3,4,5];
 
   constructor(
     private productService: ProductService,

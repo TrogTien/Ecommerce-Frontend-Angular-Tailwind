@@ -18,7 +18,7 @@ export class ProductService {
 
   constructor(private api: ApiService) { }
 
-  getAllDeletedProducts(page: number = 0, limit: number = 6, search: string = "", categoryId: number = 0): Observable<Product[]> {
+  getAllDeletedProducts(page: number = 0, limit: number = 6, search: string = "", categoryId: number = 0): Observable<any> {
     
     const params = new HttpParams()
       .set("page", page)
@@ -35,7 +35,7 @@ export class ProductService {
     );
   }
 
-  getAllActiveProducts(page: number = 0, limit: number = 6, search: string = "", categoryId: number = 0): Observable<Product[]> {
+  getAllActiveProducts(page: number = 0, limit: number = 6, search: string = "", categoryId: number = 0): Observable<any> {
     
     const params = new HttpParams()
       .set("page", page)

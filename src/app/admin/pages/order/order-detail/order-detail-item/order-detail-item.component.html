@@ -1,0 +1,30 @@
+<div
+    class="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+>
+    <div class="col-span-2 sm:col-span-4 flex items-center">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <div >
+                <img *ngIf="orderDetail.product.thumbnail; else noThumbnail" class="size-14 object-cover rounded-md" [src]="'http://localhost:8088/images/' +  orderDetail.product.thumbnail" alt="Product" />
+                <ng-template #noThumbnail>
+                    <img class="size-14 object-cover rounded-md" src="http://localhost:4200/assets/images/product/default-product.jpg" alt="Product" />
+                </ng-template>
+
+            </div>
+            <p class="text-sm font-medium text-black dark:text-white">
+                {{orderDetail.product.name}}
+            </p>
+        </div>
+    </div>
+    <div class="col-span-2 flex justify-center items-center">
+        <p class="text-sm font-medium text-black dark:text-white">{{orderDetail.number_of_products}}</p>
+    </div>
+    <div class="col-span-2 flex items-center justify-center">
+        <p class="text-sm font-medium text-black dark:text-white">{{orderDetail.price| currency: 'USD': 'symbol': '1.2-2'}}</p>
+    </div>
+  
+  
+    
+</div>
+
+
+

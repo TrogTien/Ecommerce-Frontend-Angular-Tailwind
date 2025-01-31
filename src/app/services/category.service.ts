@@ -21,5 +21,37 @@ export class CategoryService {
     );
   }
 
+  addCategory(data: any): Observable<any> {
+    return this.api.post("categories", data).pipe(
+      tap((newCategory) => {
+        const currentCategories = this.categorySubject.value;
+        this.categorySubject.next([...currentCategories, newCategory]);
+      })
+    );
+  }
+
+  updateCategory(categoryId: number, data: any): Observable<any> {
+    return this.api.put(`categories/${categoryId}`, data).pipe(
+      tap((updatedCategory) => {
+        const currentCategories = [...this.categorySubject.value];
+        const index = currentCategories.findIndex(c => c.id === categoryId);
+
+        if (index != -1) {
+          currentCategories.splice(index, 1, updatedCategory);
+          this.categorySubject.next(currentCategories);
+        }
+      })
+    );
+  }
+
+  removeCategory(categoryId: number): Observable<any> {
+    return this.api.delete(`categories/${categoryId}`).pipe(
+      tap(() => {
+        const restCategories = this.categorySubject.value.filter(_category => _category.id != categoryId);
+        this.categorySubject.next(restCategories);
+      })
+    );
+  }
+
 
 }

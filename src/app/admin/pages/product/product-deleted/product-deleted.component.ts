@@ -18,6 +18,9 @@ products$!: Observable<Product[]>;
   selectedCategoryId: number = 0;
   search: string = "";
 
+  categoryName: string = "All Categories"
+
+
   page = 1;
   limit = 8;
   totalPages = 1;
@@ -48,6 +51,19 @@ products$!: Observable<Product[]>;
 
   loadProducts(): void {
     this.productService.getAllDeletedProducts(this.page - 1, this.limit, this.search, this.selectedCategoryId).subscribe()
+  }
+
+  onChangeCategory(category?: Category): void {
+    this.categoryName = category?.name ?? "All Categories";
+    this.selectedCategoryId = category?.id ?? 0;
+
+    this.loadProducts();
+
+  }
+
+  onPageChange(newPage: number): void {
+    this.page = newPage;
+    this.loadProducts()
   }
 
   trackByProduct(index: number, product: Product): number {

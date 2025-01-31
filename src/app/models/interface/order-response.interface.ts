@@ -15,4 +15,7 @@ export interface OrderResponse {
     tracking_number: string;
     payment_method: string;
     active: boolean;
+    tax: number;
+    shipping_cost: number;
+    sub_total: number;
 }

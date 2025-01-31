@@ -1,20 +1,34 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss']
 })
-export class PaginationComponent {
+export class PaginationComponent implements OnChanges {
   @Input() page: number = 1;
   @Input() limit: number = 6;
-  @Input() totalPages: number = 1;
+  @Input() totalPages: number = 5;
 
   @Output() pageChange = new EventEmitter<number>();
 
   arrPage = [1,2,3,4,5];
 
   constructor() {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['totalPages'] && changes['totalPages'].currentValue != changes['totalPages'].previousValue) {
+
+      if(changes['totalPages'] && this.totalPages < 5 ) {
+        this.arrPage = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        
+      } else {
+        this.arrPage = [1,2,3,4,5];
+      }
+    }
+  }
+
+
 
   previousPage(): void {
     if (this.arrPage[0] > 1) {

@@ -59,9 +59,9 @@
                              dark:text-slate-200"  
                              formControlName="shipping_method" 
                         >
-                            <option class="bg-[#c8c8c8] text-white" selected disabled value="">Shipping method</option>
-                            <option  value="fast">Fast (15$)</option>
-                            <option  value="normal">Normal (10$)</option>
+                            <option class="bg-[#c8c8c8] text-white"  disabled value="">Shipping method</option>
+                            <option  value="express" selected>Express (15$) 3 - 5 days</option>
+                            <option  value="normal">Normal (10$) 5 - 7 days</option>
                         </select>
                         <p *ngIf="shippingMethod.invalid && shippingMethod.touched"  class="mt-2 text-sm text-red-600 dark:text-red-500">{{ getErrorMessage(shippingMethod) }}</p>
                         
@@ -114,7 +114,10 @@
                                 *ngFor="let cart of carts"
                             >
                                 <td class="p-4">
-                                    <img [src]="'http://localhost:8088/images/' + cart.thumbnail" class="w-16 md:w-32 xl:w-32 max-w-full max-h-full" alt="Apple Watch">
+                                    <img *ngIf="cart.thumbnail; else noThumbnail" [src]="'http://localhost:8088/images/' + cart.thumbnail" class="w-16 md:w-32 xl:w-32 max-w-full max-h-full" alt="Apple Watch">
+                                    <ng-template #noThumbnail>
+                                        <img src="http://localhost:4200/assets/images/product/default-product.jpg" class="w-16 md:w-32 xl:w-32 max-w-full max-h-full" alt="Apple Watch">
+                                    </ng-template>
                                 </td>
                                 <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                                     {{cart.name}}
@@ -157,7 +160,10 @@
                     </table>
                 </div>
     
-                <h4 class="text-xl text-end mt-2 font-semibold ">Tổng giá trị: {{total  | currency: 'USD' : 'symbol' : '1.2-2'}} </h4>
+                <h4 class="text-lg text-end mt-2  ">Subtotal: {{ subTotal | currency: 'USD' : 'symbol' : '1.2-2'}} </h4>
+                <h4 class="text-lg text-end mt-2 ">Shipping: {{ shippingCost | currency: 'USD' : 'symbol' : '1.2-2'}} </h4>
+                <h4 class="text-lg text-end mt-2 ">Tax VAT(10%): {{ tax | currency: 'USD' : 'symbol' : '1.2-2'}} </h4>
+                <h4 class="text-xl text-black text-end mt-2 font-semibold border-t border-black">Total price: {{ totalMoney  | currency: 'USD' : 'symbol' : '1.2-2'}} </h4>
     
                 <div class="">
                     <h4 class="text-xl mb-2"> Nhập coupon</h4>
@@ -166,10 +172,12 @@
                     <input type="tel" class="py-1 px-4 rounded-l-lg w-4/5 border-none">
                     <button type="button" class="bg-gradient-to-r from-teal-400 to-blue-500 py-1 px-4 rounded-r-3xl w-1/5 dark:from-pink-500 dark:to-purple-500">Áp dụng</button>
                 </div>
-    
-                <button type="button" class="font-semibold mt-2 bg-gradient-to-r from-pink-500 to-orange-500 py-2 px-4 rounded-3xl w-1/5 "
-                    (click)="onSubmitForm()"
-                >Đặt hàng</button>
+                <div class="text-center">
+
+                    <button type="button" class="font-semibold mt-2 w-2/5 bg-gradient-to-r from-pink-500 to-orange-500 py-2 px-4 rounded-3xl hover:opacity-90  "
+                        (click)="onSubmitForm()"
+                    >Đặt hàng</button>
+                </div>
                 
       
             </div>

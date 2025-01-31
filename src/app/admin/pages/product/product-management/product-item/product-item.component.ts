@@ -20,7 +20,7 @@ export class ProductItemComponent {
     if (this.productItem?.thumbnail) {
       this.imageUrl = "http://localhost:8088/images/" + this.productItem.thumbnail;
     } else {
-      this.imageUrl = "";
+      this.imageUrl = "http://localhost:4200/assets/images/product/default-product.jpg";
     }
 
 

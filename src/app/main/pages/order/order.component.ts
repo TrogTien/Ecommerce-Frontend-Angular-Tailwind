@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, debounceTime, distinctUntilChanged, map, Observable, Subject, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, map, Observable, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Cart } from 'src/app/models/interface/cart.interface';
 import { CartService } from 'src/app/services/cart.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -16,10 +16,17 @@ export class OrderComponent implements OnInit, OnDestroy {
   carts: Cart[] = [];
   orderForm!: FormGroup<any>;
   userId: number | null = 0;
-  total: number = 0;
-
-
+  subTotal = 0;
+  shippingCost = 0;
+  tax = 0;
+  totalMoney = 0;
+  // Rxjs
   destroy$ = new Subject<void>();
+
+
+
+
+  
   
   constructor(
     private cartService: CartService,
@@ -47,18 +54,43 @@ export class OrderComponent implements OnInit, OnDestroy {
       email: ['abc@gmail.com', [Validators.email, Validators.required]],
       address: ['Ha Noi', [Validators.required]],
       note: ['Ghi chu'],
-      shipping_method: ['', [Validators.required]],
+      shipping_method: ['express', [Validators.required]],
       payment_method: ['', [Validators.required]],
     })
 
+    // Listen subtotal
     this.cartService.carts$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
       map(cartItem => cartItem.reduce((sum, item) => sum + item.price * item.qty, 0)),
       takeUntil(this.destroy$)
-    ).subscribe(totalMoney => {
-      this.total = totalMoney;
-    })
+    ).subscribe(val => {
+      this.subTotal = val;
+      this.updateTotalMoney();
+    });
+  
+
+    // Listen Shipping cost
+    this.orderForm.get('shipping_method')?.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      startWith(this.orderForm.get('shipping_method')?.value), // Giá trị khởi tạo từ FormControl
+      map(method => (method === 'express' ? 15 : 10))
+    ).subscribe(val => {
+      this.shippingCost = val;
+      this.updateTotalMoney();
+    });
+
+    
+  
+   
 
     this.userId = this.tokenService.getUserId();
+  }
+
+  updateTotalMoney(): void {
+    this.tax = (this.shippingCost + this.subTotal) * 0.1;
+    this.totalMoney = this.shippingCost + this.subTotal + this.tax;
   }
 
   increaseQty(cart: Cart): void {
@@ -101,17 +133,22 @@ export class OrderComponent implements OnInit, OnDestroy {
       }))
 
       const orderDTO = {
-        ... this.orderForm.value,
+        ...this.orderForm.value,
         "cart_items": newCarts,
         "user_id": this.userId,
-        "total_money": this.total
-      }
-
+        "total_money": this.totalMoney,
+        "sub_total": this.subTotal,
+        "shipping_cost": this.shippingCost,
+        "tax": this.tax
+      };
+    
       this.orderService.postOrder(orderDTO).subscribe((res) => {
         console.log("Đặt hàng thành công");
         this.cartService.clearCart();
         this.router.navigate(['/order-confirm', res.id]);
       });
+      
+  
 
     } else {
       console.warn("Invalid");

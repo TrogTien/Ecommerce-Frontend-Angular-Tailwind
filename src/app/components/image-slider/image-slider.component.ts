@@ -22,6 +22,9 @@ export class ImageSliderComponent implements OnInit {
   
   ngOnInit(): void {
     this.product.imageUrls = this.product.imageUrls.map(url => "http://localhost:8088/images/" + url);
+    if (!this.product.thumbnail) {
+      this.product.imageUrls[0] = "http://localhost:4200/assets/images/product/default-product.jpg";
+    }
 
     this.slides = this.product.imageUrls;
   }

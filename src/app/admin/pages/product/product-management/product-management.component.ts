@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { initDropdowns, initModals } from 'flowbite';
 import { Observable, take } from 'rxjs';
 import { Category } from 'src/app/models/interface/category.interface';
-import { ProductResponse } from 'src/app/models/interface/product-response.interface';
 import { Product } from 'src/app/models/interface/product.interface';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -19,10 +18,11 @@ export class ProductManagementComponent implements OnInit {
   selectedCategoryId: number = 0;
   search: string = "";
 
+  categoryName: string = "All Categories"
+
   page = 1;
   limit = 8;
   totalPages = 1;
-  arrPage = [1,2,3,4,5];
 
   constructor(
     private productService: ProductService,
@@ -41,7 +41,6 @@ export class ProductManagementComponent implements OnInit {
       take(2)
     ).subscribe(data => {
       this.totalPages = this.productService.totalPages;
-      console.log(this.totalPages);
     })
 
     initDropdowns();
@@ -54,8 +53,16 @@ export class ProductManagementComponent implements OnInit {
     this.loadProducts()
   }
 
+
   loadProducts(): void {
     this.productService.getAllActiveProducts(this.page - 1, this.limit, this.search, this.selectedCategoryId).subscribe()
+  }
+
+  onChangeCategory(category?: Category): void {
+    this.categoryName = category?.name ?? "All Categories";
+    this.selectedCategoryId = category?.id ?? 0;
+
+    this.loadProducts();
   }
 
   trackByProduct(index: number, product: Product): number {

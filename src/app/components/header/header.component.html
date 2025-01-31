@@ -1,6 +1,6 @@
 
 
-<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 ">
+<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
         <a routerLink="/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -83,7 +83,10 @@
                             <li class="py-2 px-2 sm:py-2 hover:bg-slate-200 cursor-pointer" *ngFor="let item of carts$ | async">
                                 <div class="flex items-center space-x-4 rtl:space-x-reverse">
                                     <div class="flex-shrink-0">
-                                        <img class="w-16 h-16 rounded-sm object-cover" [src]="'http://localhost:8088/images/' + item.thumbnail" alt="Neil image">
+                                        <img *ngIf="item.thumbnail; else noThumbnail" class="w-16 h-16 rounded-sm object-cover" [src]="'http://localhost:8088/images/' + item.thumbnail" alt="Neil image">
+                                        <ng-template #noThumbnail>
+                                            <img class="w-16 h-16 rounded-sm object-cover" src="http://localhost:4200/assets/images/product/default-product.jpg" alt="Neil image">
+                                        </ng-template>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-sm font-medium text-gray-900 truncate dark:text-white">

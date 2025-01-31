@@ -29,7 +29,10 @@
                 <ng-container *ngFor="let orderDetailRes of orderDetailsRes">
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="p-4">
-                            <img [src]="'http://localhost:8088/images/' + orderDetailRes.product.thumbnail" class="w-16 md:w-32 xl:w-48 max-w-full max-h-full" alt="Apple Watch">
+                            <img *ngIf="orderDetailRes.product.thumbnail; else noThumbnail" [src]="'http://localhost:8088/images/' + orderDetailRes.product.thumbnail" class="w-16 md:w-32 xl:w-48 max-w-full max-h-full" alt="Apple Watch">
+                            <ng-template #noThumbnail>
+                                <img src="http://localhost:4200/assets/images/product/default-product.jpg" class="w-16 md:w-32 xl:w-48 max-w-full max-h-full" alt="Apple Watch">
+                            </ng-template>
                         </td>
                         <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                             {{orderDetailRes.product.name}}
@@ -61,7 +64,7 @@
 
     <div class="text-center">
 
-        <button type="button" class="font-semibold  mt-2 bg-gradient-to-r from-pink-500 to-orange-500 py-2 px-4 rounded-3xl w-1/5 dark:from-pink-500 dark:to-purple-500"
+        <button type="button" class="font-semibold  mt-2 bg-gradient-to-r from-pink-500 to-orange-500 py-2 px-4 rounded-3xl w-2/5 dark:from-pink-500 dark:to-purple-500"
             routerLink="/home"
         >Tiếp tục mua sắm</button>
     </div>
